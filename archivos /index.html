@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureShare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #d3d3d3; /* Fondo gris claro */
+        }
+        .container {
+            background-color: #ff8c00; /* Naranja más oscuro */
+            padding: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-radius: 10px; /* Bordes redondeados */
+        }
+        .container h1 {
+            color: white;
+            margin: 0;
+            margin-bottom: 25px;
+            font-size: 2em; /* Tamaño de fuente aumentado en un 25% */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        .button-container a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 12.5px 25px; /* Padding aumentado en un 25% */
+            margin: 0 12.5px; /* Margen aumentado en un 25% */
+            border-radius: 5px;
+        }
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a SecureShare</h1>
+        <div class="button-container">
+            <a href="login.php">Iniciar sesión</a>
+            <a href="signin.php">Registrarse</a>
+        </div>
+    </div>
+</body>
+</html>
