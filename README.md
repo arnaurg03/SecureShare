@@ -14,7 +14,13 @@ phpMyAdmin: Esta herramienta resultó muy útil para administrar y visualizar la
 
    CSS (Cascading Style Sheets): Usamos CSS para dar estilo y personalidad a nuestra página web. Esta tecnología nos permitió aplicar colores, fuentes, diseños y efectos visuales a los elementos HTML, logrando una apariencia visualmente atractiva y coherente en toda la página.
 
-PHP (Hypertext Preprocessor): Empleamos PHP para trabajar con la lógica del lado del servidor. Utilizamos este lenguaje de programación para procesar y enviar solicitudes a la base de datos, manejar la autenticación de usuarios, y generar dinámicamente contenido en la página web. Con PHP, pudimos crear un sistema robusto que permitía a los usuarios guardar sus personajes favoritos y acceder a ellos posteriormente.
+   PHP (Hypertext Preprocessor): Empleamos PHP para trabajar con la lógica del lado del servidor. Utilizamos este lenguaje de programación para procesar y enviar solicitudes a la base de    datos, manejar la autenticación de usuarios, y generar dinámicamente contenido en la página web. Con PHP, pudimos crear un sistema robusto que permitía a los usuarios guardar sus personajes favoritos y acceder a ellos posteriormente.
 
-MySQL: Utilizamos MySQL como sistema de gestión de bases de datos para almacenar y administrar la información relacionada con los personajes y las preferencias de los usuarios. Con MySQL, pudimos diseñar y crear tablas, ejecutar consultas para recuperar y manipular datos, y asegurar la integridad de la información almacenada.
+   MySQL: Utilizamos MySQL como sistema de gestión de bases de datos para almacenar y administrar la información relacionada con los personajes y las preferencias de los usuarios. Con MySQL, pudimos diseñar y crear tablas, ejecutar consultas para recuperar y manipular datos, y asegurar la integridad de la información almacenada.
+
+   Python:
+
+2. Listado de codigos y funciones:
+
+
 
