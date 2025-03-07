@@ -22,5 +22,41 @@ phpMyAdmin: Esta herramienta resultó muy útil para administrar y visualizar la
 
 2. Listado de codigos y funciones:
 
+Web: 
 
+Index.html *Pagina para elegir entre iniciar sesion o registrarse*
+
+Login.php *Pagina de inicio de sesión*
+
+Signin.php *Pagina para registro nuevo usuario*
+
+Inicio.php *Pagina del menú*
+
+Analisis.php *Pagina donde subir ficheros o carpetas y analizarlas*
+
+Perfil.php *Pagina donde queda el "registro de archivos subidos"
+
+Cerrar_sesion.php *Pagina para cerrar sesion*
+
+Conexión.php *Establece conexión con la base de datos*
+
+ 
+
+Ficheros: 
+
+Descargar.php *codigo para descargar los archivos y mandarlos a la carpeta /uploads*
+
+/uploads (es una carpeta pero lo apunto también) 
+
+Upload.php *codigo para poder subir los archivos*
+
+ 
+
+“virustotal”: 
+
+Analizar.py *script python que analiza los archivos subidos con la api de virustotal*
+
+Procesar_analisis.php *Activa la api y muestra los resultados del analisis*
+
+Analisis.php 
 
