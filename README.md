@@ -36,7 +36,7 @@ Para que el servidor pueda ser accedido desde fuera o comunicarse con otras VMs:
 
 - Abre configuración de la VM en VirtualBox.
 - Ve a **Red > Adaptador 1**.
-- Selecciona "Adaptador puente" o "Red interna" según tu entorno.
+- Selecciona "Adaptador puente".
 
 Verifica la IP del servidor con:
 
@@ -85,27 +85,61 @@ sudo chown -R www-data:www-data /var/www/proyecto
 
 ## 6. Configurar la base de datos
 
-Inicia sesión en MySQL:
+Inicia sesión en MySQL con el siguiente comando:
 
 ```bash
-sudo mysql
+sudo mysql -u root -p
 ```
 
-Copia y pega las siguientes instrucciones para crear la base de datos y el usuario:
+Una vez dentro del intérprete de comandos de MySQL, ejecuta los siguientes pasos para crear la base de datos y las tablas necesarias:
+
+### Crear la base de datos
 
 ```sql
 CREATE DATABASE db_users;
-CREATE USER 'root'@'localhost' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON db.* TO 'root'@'localhost';
-FLUSH PRIVILEGES;
+USE db_users;
+```
+
+### Crear tabla `departamentos`
+
+```sql
+CREATE TABLE departamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
+```
+
+Insertar los departamentos disponibles:
+
+```sql
+INSERT INTO departamentos (nombre) VALUES
+('ciberseguridad'),
+('marketing'),
+('integracion social'),
+('soporte'),
+('administrador');
+```
+
+### Crear tabla `usuarios`
+
+```sql
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('usuario', 'admin') DEFAULT 'usuario',
+    departamento INT,
+    FOREIGN KEY (departamento) REFERENCES departamentos(id)
+);
+```
+
+Una vez hecho esto, puedes salir del intérprete de MySQL con:
+
+```sql
 EXIT;
 ```
 
-Luego importa el esquema de base de datos:
-
-```bash
-mysql -u secureuser -p securefiles < /var/www/proyecto/database/schema.sql
-```
+Esto dejará la base de datos lista para usar con el sistema.
 
 ## 7. Configurar VirusTotal API
 
