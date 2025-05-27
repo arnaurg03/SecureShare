@@ -1,62 +1,136 @@
-# SecureShare
 
-1. Herramientas utilizadas
+# Secure File Share - Plataforma de Compartición Segura de Archivos
 
-  Base de datos MySQL: Utilizo MySQL como mi sistema de gestión de bases de datos. Me permitió crear tablas, definir relaciones y ejecutar consultas para acceder y manipular la información de manera eficiente.
+Este proyecto consiste en una plataforma web segura para la compartición de archivos entre usuarios. Ha sido desarrollada como parte del proyecto final del ciclo de **Administración de Sistemas Informáticos en Red (ASIX)**.
 
-Servidor web Apache: Utilizo Apache como mi servidor web para alojar la página web y proporcionar acceso al usuario. Configuré el servidor para asegurarme de que la página web estuviera disponible y pudiera interactuar con la base de datos de MySQL sin problemas.
+## Requisitos previos
 
-phpMyAdmin: Esta herramienta resultó muy útil para administrar y visualizar la base de datos de MySQL. Me permitió realizar tareas como crear tablas, importar datos y ejecutar consultas SQL directamente desde una interfaz amigable, lo que facilitó mucho el trabajo con la base de datos.
+Antes de comenzar, asegúrate de tener instalado en tu ordenador:
 
-2. Lenguajes utilizados
+- [VirtualBox](https://www.virtualbox.org/) o cualquier otro hipervisor compatible.
+- Imagen ISO de **Ubuntu Server 22.04 LTS** (u otra versión compatible).
+- Conexión a internet en la máquina virtual.
 
-HTML (HyperText Markup Language): Utilizo HTML como el lenguaje de marcado fundamental para estructurar y organizar el contenido de mi página web. Con HTML, pude crear elementos como encabezados, párrafos, enlaces e imágenes, proporcionando la estructura básica de la página.
+## 1. Crear la máquina virtual Ubuntu Server
 
-CSS (Cascading Style Sheets): Uso CSS para dar estilo y personalidad a mi página web. Esta tecnología me permitió aplicar colores, fuentes, diseños y efectos visuales a los elementos HTML, logrando una apariencia visualmente atractiva y coherente en toda la página.
+1. Abre VirtualBox y crea una nueva máquina virtual.
+2. Asigna un nombre (por ejemplo, `secure-server`) y selecciona:
+   - Tipo: Linux
+   - Versión: Ubuntu (64-bit)
+3. Asigna al menos:
+   - **2 GB de RAM**
+   - **1 CPU**
+   - **10 GB de disco duro (dinámico o fijo)**
+4. Monta la ISO de Ubuntu Server e inicia la instalación.
+5. Durante la instalación:
+   - Elige idioma: Español (o Inglés)
+   - Nombre del equipo: `secure-server`
+   - Crea un usuario y contraseña.
+   - **Instala OpenSSH Server** cuando te lo pregunte.
+   - No instales servicios adicionales por ahora.
+6. Finaliza la instalación y reinicia la máquina.
 
-PHP (Hypertext Preprocessor): Empleo PHP para trabajar con la lógica del lado del servidor. Utilizo este lenguaje de programación para procesar y enviar solicitudes a la base de datos, manejar la autenticación del usuario y generar dinámicamente contenido en la página web. Con PHP, pude crear un sistema robusto que permitía al usuario guardar su personaje favorito y acceder a él posteriormente.
+## 2. Configurar red (modo adaptador puente o red interna)
 
-MySQL: Utilizo MySQL como sistema de gestión de bases de datos para almacenar y administrar la información relacionada con el personaje y las preferencias del usuario. Con MySQL, pude diseñar y crear tablas, ejecutar consultas para recuperar y manipular datos, y asegurar la integridad de la información almacenada.
+Para que el servidor pueda ser accedido desde fuera o comunicarse con otras VMs:
 
-Python:
+- Abre configuración de la VM en VirtualBox.
+- Ve a **Red > Adaptador 1**.
+- Selecciona "Adaptador puente" o "Red interna" según tu entorno.
 
-3. Listado de codigos y funciones:
+Verifica la IP del servidor con:
 
-Web: 
+```bash
+ip a
+```
 
-Index.html *Pagina para elegir entre iniciar sesion o registrarse*
+## 3. Conexión por SSH (opcional)
 
-Login.php *Pagina de inicio de sesión*
+Puedes conectarte a tu servidor vía SSH desde tu equipo host:
 
-Signin.php *Pagina para registro nuevo usuario*
+```bash
+ssh tu_usuario@IP_DEL_SERVIDOR
+```
 
-Inicio.php *Pagina del menú*
+## 4. Actualizar paquetes e instalar dependencias
 
-Analisis.php *Pagina donde subir ficheros o carpetas y analizarlas*
+Una vez dentro del servidor, ejecuta:
 
-Perfil.php *Pagina donde queda el "registro de archivos subidos"
+```bash
+sudo apt update && sudo apt upgrade -y
+```
 
-Cerrar_sesion.php *Pagina para cerrar sesion*
+### Instalar Apache, PHP y MySQL:
 
-Conexión.php *Establece conexión con la base de datos*
+```bash
+sudo apt install apache2 php libapache2-mod-php php-mysql mariadb-server unzip curl git -y
+```
 
- 
+### Habilitar servicios:
 
-Ficheros: 
+```bash
+sudo systemctl enable apache2
+sudo systemctl enable mariadb
+```
 
-Descargar.php *codigo para descargar los archivos y mandarlos a la carpeta /uploads*
+## 5. Clonar el proyecto
 
-/uploads (es una carpeta pero lo apunto también) 
+Copia tu carpeta del proyecto a `/var/www/proyecto/`. Si lo haces desde GitHub:
 
-Upload.php *codigo para poder subir los archivos*
+```bash
+cd /var/www
+sudo git clone https://github.com/arnaurg03/SecureShare.git proyecto
+sudo chown -R www-data:www-data /var/www/proyecto
+```
 
- 
+## 6. Configurar la base de datos
 
-“virustotal”: 
+Inicia sesión en MySQL:
 
-Analizar.py *script python que analiza los archivos subidos con la api de virustotal*
+```bash
+sudo mysql
+```
 
-Procesar_analisis.php *Activa la api y muestra los resultados del analisis*
+Copia y pega las siguientes instrucciones para crear la base de datos y el usuario:
 
-Analisis.php 
+```sql
+CREATE DATABASE db_users;
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON db.* TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+```
+
+Luego importa el esquema de base de datos:
+
+```bash
+mysql -u secureuser -p securefiles < /var/www/proyecto/database/schema.sql
+```
+
+## 7. Configurar VirusTotal API
+
+Edita el archivo de configuración para añadir tu clave API de VirusTotal:
+
+```bash
+sudo nano /var/www/proyecto/api.txt
+```
+
+Ejemplo de contenido:
+
+```php
+<?php
+define('VT_API_KEY', 'AQUI_TU_API_KEY');
+?>
+```
+
+Puedes conseguir tu clave gratuita desde: https://www.virustotal.com/gui/join-us
+
+## 8. Comprobar funcionamiento
+
+- Abre tu navegador y accede a: `http://IP_DEL_SERVIDOR`
+- Regístrate como nuevo usuario.
+- Sube un archivo de prueba.
+- Comprueba si se analiza con VirusTotal y se guarda correctamente.
+- Accede como administrador para validar usuarios y asignar departamentos.
+
 
