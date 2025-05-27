@@ -1,5 +1,5 @@
 
-# Secure File Share - Plataforma de Compartición Segura de Archivos
+# SecureShare
 
 Este proyecto consiste en una plataforma web segura para la compartición de archivos entre usuarios. Ha sido desarrollada como parte del proyecto final del ciclo de **Administración de Sistemas Informáticos en Red (ASIX)**.
 
