@@ -1,0 +1,1 @@
+python3 /var/www/proyecto/analyze_file.py 372b792b02a93906c7b827acc015904a542ffac75b597c1ceb741d7a3ded51fe /var/www/proyecto/uploads/
